@@ -7,8 +7,8 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/games', (req, res) => {
-  models.games.findAll({
-    where: {
+  let queryObj = {
+    $and: {
       team1: {
         $ne: null
       },
@@ -16,6 +16,31 @@ router.get('/games', (req, res) => {
         $ne: null
       }
     }
+  }
+  
+  const team1 = req.query.team1
+  const team2 = req.query.team2
+  const team = req.query.team
+  if (team1) {
+    queryObj.team1 = team1
+  }
+  if (team2) {
+    queryObj.team2 = team2
+  }
+  if (team) {
+    queryObj = {
+      $or: [
+        {
+          team1: team
+        },
+        {
+          team2: team
+        }
+      ]
+    }
+  }
+  models.games.findAll({
+    where: queryObj
   }).then(games => {
     res.send(games)
   }).catch(err => {
@@ -23,6 +48,15 @@ router.get('/games', (req, res) => {
   })
 })
 
+router.get('/game/:id', (req, res) => {
+  const gameId = req.params.id
+  models.games.findById(gameId)
+    .then(game => {
+      res.send(game)
+    }).catch(err => {
+      throw new Error(err)
+    })
+})
 router.get('/teams', (req, res) => {
   models.teams.findAll()
     .then(teams => {
@@ -31,4 +65,5 @@ router.get('/teams', (req, res) => {
       throw new Error(err)
     })
 })
+
 module.exports = router
