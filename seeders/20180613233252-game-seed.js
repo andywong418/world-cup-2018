@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const games = require('../static/games')
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -8,4 +8,4 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('games', null, {})
   }
-};
+}
