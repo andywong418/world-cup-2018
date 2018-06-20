@@ -48,6 +48,15 @@ router.get('/games', (req, res) => {
   })
 })
 
+router.get('/game/:id', (req, res) => {
+  const gameId = req.params.id
+  models.games.findById(gameId)
+    .then(game => {
+      res.send(game)
+    }).catch(err => {
+      throw new Error(err)
+    })
+})
 router.get('/teams', (req, res) => {
   models.teams.findAll()
   .then(teams => {
