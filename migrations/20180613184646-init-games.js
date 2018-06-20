@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -72,7 +72,7 @@ module.exports = {
         },
         deleted_at: {
           type: Sequelize.DATE,
-          field: 'deleted_at',
+          field: 'deleted_at'
         }
       }
     )
@@ -81,4 +81,4 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('games')
   }
-};
+}
