@@ -17,7 +17,6 @@ router.get('/games', (req, res) => {
       }
     }
   }
-  
   const team1 = req.query.team1
   const team2 = req.query.team2
   const team = req.query.team
