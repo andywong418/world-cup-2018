@@ -1,1 +1,0 @@
-export BETTY_BACKUP_TOKEN='coilisthebest'
