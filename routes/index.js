@@ -66,17 +66,13 @@ router.get('/teams', (req, res) => {
 })
 
 router.post('/save-bet-snapshots', async (req, res) => {
-  console.log('req body', req.t)
   const bets = req.body.bets
-  console.log('bets length', Object.keys(bets).length)
   if (req.body.token !== process.env.BETTY_BACKUP_TOKEN) {
     res.status(503).send('Not authenticated!')
   } else {
-    console.log('loggin')
     for (let key in bets) {
       const bet = bets[key]
       bet.amount = Number(bet.amount)
-      console.log('bet tag', bet)
       if (bet.destinationTag) {
         bet.destinationTag = bet.destinationTag.toString()
         if (bet.opposingBet) {
