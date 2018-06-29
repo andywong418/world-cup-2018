@@ -65,4 +65,42 @@ router.get('/teams', (req, res) => {
     })
 })
 
+router.post('/save-bet-snapshots', async (req, res) => {
+  console.log('req body', req.t)
+  const bets = req.body.bets
+  console.log('bets length', Object.keys(bets).length)
+  if (req.body.token !== process.env.BETTY_BACKUP_TOKEN) {
+    res.status(503).send('Not authenticated!')
+  } else {
+    console.log('loggin')
+    for (let key in bets) {
+      const bet = bets[key]
+      bet.amount = Number(bet.amount)
+      console.log('bet tag', bet)
+      if (bet.destinationTag) {
+        bet.destinationTag = bet.destinationTag.toString()
+        if (bet.opposingBet) {
+          bet.opposingBet = bet.opposingBet.toString()
+        }
+        await models.bets.findOrCreate({
+          where: {
+            destinationTag: bet.destinationTag
+          },
+          defaults: {
+            bettingTeam: bet.bettingTeam,
+            matchId: bet.matchId,
+            email: bet.email,
+            name: bet.name,
+            txHash: bet.txHash,
+            amount: bet.amount,
+            opposingBet: bet.opposingBet
+          }
+        })
+      }
+    }
+    res.send({
+      success: true
+    })
+  }
+})
 module.exports = router
