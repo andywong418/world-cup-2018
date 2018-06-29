@@ -89,7 +89,8 @@ router.post('/save-bet-snapshots', async (req, res) => {
             name: bet.name,
             txHash: bet.txHash,
             amount: bet.amount,
-            opposingBet: bet.opposingBet
+            opposingBet: bet.opposingBet,
+            address: bet.address
           }
         })
       }
