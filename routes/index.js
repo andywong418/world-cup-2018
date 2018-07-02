@@ -39,7 +39,10 @@ router.get('/games', (req, res) => {
     }
   }
   models.games.findAll({
-    where: queryObj
+    where: queryObj,
+    order: [
+      ['matchTime', 'DESC']
+    ]
   }).then(games => {
     res.send(games)
   }).catch(err => {
